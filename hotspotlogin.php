@@ -43,13 +43,12 @@ $uamsecret = "uamtesting123";
 $userpassword=1;
 
 # Define your template here
-$template_name = "";
+$template_name = "default";
 $language = "en";
 
 # Our own path
 $loginpath = $_SERVER['PHP_SELF'];
 
-$template = "";
 if(empty($template_name)) $template_name = "default";
 if (file_exists("template/".$template_name)) {
     $template = $template_name;
@@ -282,20 +281,20 @@ echo "<!doctype html>
   
   ";
   
+    if (file_exists("template/".$template."/css/style.css")) {
+        echo "<link href=\"template/".$template."/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />";
+    }
   
-if (file_exists("template/".$template."/css/style.css")) {
-    echo "<link href=\"template/".$template."/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />";
-}
-  
-  
-
+    if (file_exists("template/".$template."/js/style.js")) {
+        echo "<script src=\"template/".$template."/js/style.js\" ></script>";
+    }
   
   echo "<script language=\"javascript\">";
     include('js/hotspotlogin.js');
   echo "</script>";
 
 echo "</head>";
-echo "<body onLoad=\"javascript:doOnLoad($result, '$loginpath?res=popup2&uamip=$uamip&uamport=$uamport&userurl=$userurl&redirurl=$redirurl&timeleft=$timeleft','$userurldecode', '$redirurldecode', '$timeleft')\" onBlur = 'javascript:doOnBlur($result)' bgColor = '#c0d8f4'>";
+echo "<body onLoad=\"javascript:doOnLoad($result, '$loginpath?res=popup2&uamip=$uamip&uamport=$uamport&userurl=$userurl&redirurl=$redirurl&timeleft=$timeleft','$userurldecode', '$redirurldecode', '$timeleft')\" onBlur = 'javascript:doOnBlur($result)' >";
 
 if ($result == 2) {
     include('template/'.$template.'/login-failed-notification.php');
@@ -324,6 +323,10 @@ if ($result == 11) {
 if (($result == 3) || ($result == 13)) {
     include('template/'.$template.'/prelogin.php');
 }
+
+echo "<script src=\"js/jquery-3.2.1.slim.min.js\" integrity=\"sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN\" crossorigin=\"anonymous\"></script>";
+echo "<script src=\"js/popper.min.js\" integrity=\"sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q\" crossorigin=\"anonymous\"></script>";
+echo "<script src=\"js/bootstrap.min.js\" integrity=\"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl\" crossorigin=\"anonymous\"></script>";
 
 echo "</body>";
 echo "</html>";

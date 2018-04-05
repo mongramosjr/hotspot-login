@@ -33,7 +33,7 @@ echo "
             <input type='hidden' name='uamip' value='$uamip'>
             <input type='hidden' name='uamport' value='$uamport'>
             <input type='hidden' name='userurl' value='$userurl'>
-		    <h3 class='form-signin-heading'>Welcome Back! Please Sign In</h3>
+		    <h3 class='form-signin-heading'>Welcome!</h3>
 			  <hr class='colorgraph'><br>
 			  
 			  <input type='text' class='form-control' name='Username' placeholder='$centerUsername' required='' autofocus='' />
