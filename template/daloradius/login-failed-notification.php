@@ -25,8 +25,8 @@
  *********************************************************************************************************
  */
 
-  echo "
-  <h1 style=\"text-align: center;\">$h1Failed</h1>";
-    if ($reply) {
-    echo "<center> $reply </BR></BR></center>";
-    }
+echo "<h1 style=\"text-align: center;\">$h1Failed</h1>";
+  
+if ($reply) {
+    echo "<center> $reply </br></br></center>";
+}

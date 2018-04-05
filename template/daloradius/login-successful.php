@@ -25,16 +25,10 @@
  *********************************************************************************************************
  */
 
-echo "
-  <h1 style=\"text-align: center;\">$h1Loggedin</h1>";
+echo "<h1 style=\"text-align: center;\">$h1Loggedin</h1>";
 
-  if ($reply) { 
-      echo "<center> $reply </br></br></center>";
-  }
+if ($reply) { 
+  echo "<center> $reply </br></br></center>";
+}
 
-  echo "
-  <center>
-    <a href=\"http://$uamip:$uamport/logoff\">Logout</a>
-  </center>
-</body>
-</html>";
+echo "<center><a href=\"http://$uamip:$uamport/logoff\">Logout</a></center>";

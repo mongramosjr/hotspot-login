@@ -194,7 +194,7 @@ if ($button == 'Login') {
   <link rel=\"stylesheet\" href=\"css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">"
   ;
   
-    if (file_exists("template/".$template_name."/css/style.css")) {
+    if (file_exists("template/".$template."/css/style.css")) {
         echo "<link href=\"template/".$template."/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />";
     }
 
@@ -224,8 +224,9 @@ echo "
   echo "</AuthenticationReply> 
 </WISPAccessGatewayParam>
 -->
-</html>
 ";
+
+    echo "</body></html>";
     exit(0);
 }
 
@@ -278,7 +279,7 @@ echo "<!doctype html>
   ";
   
   
-if (file_exists("template/".$template_name."/css/style.css")) {
+if (file_exists("template/".$template."/css/style.css")) {
     echo "<link href=\"template/".$template."/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />";
 }
   
@@ -322,4 +323,5 @@ if (($result == 3) || ($result == 13)) {
     include('template/'.$template.'/prelogin.php');
 }
 
+echo "</body></html>";
 exit(0);

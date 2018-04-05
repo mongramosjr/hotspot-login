@@ -25,10 +25,5 @@
  *********************************************************************************************************
  */
 
-echo "
-  <h1 style=\"text-align: center;\">$h1Loggedin</h1>
-  <center>
-    <a href=\"http://$uamip:$uamport/logoff\">$centerLogout</a>
-  </center>
-  </body>
-</html>";
+echo "<h1 style=\"text-align: center;\">$h1Loggedin</h1>
+<center><a href=\"http://$uamip:$uamport/logoff\">$centerLogout</a></center>";
