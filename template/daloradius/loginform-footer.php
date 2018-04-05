@@ -31,10 +31,10 @@ echo <<<END
             
 
 		<h1>Hotspot References</h1>
-		<a href="#"><img src="template/images/portfolio1.jpg" alt="portfolio1" /></a>
-		<a href="#"><img src="template/images/portfolio2.jpg" alt="portfolio2" /></a>
-		<a href="#"><img src="template/images/portfolio3.jpg" alt="portfolio3" /></a>
-		<a href="#"><img src="template/images/portfolio4.jpg" alt="portfolio4" /></a>
+		<a href="#"><img src="template/daloradius/images/portfolio1.jpg" alt="portfolio1" /></a>
+		<a href="#"><img src="template/daloradius/images/portfolio2.jpg" alt="portfolio2" /></a>
+		<a href="#"><img src="template/daloradius/images/portfolio3.jpg" alt="portfolio3" /></a>
+		<a href="#"><img src="template/daloradius/images/portfolio4.jpg" alt="portfolio4" /></a>
 	</div>
 
 

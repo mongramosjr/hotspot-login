@@ -42,8 +42,21 @@ $uamsecret = "enginx";
 # for radius authentication. Must be used together with $uamsecret.
 $userpassword=1;
 
+# Define your template here
+$template_name = "daloradius";
+$language = "en";
+
 # Our own path
 $loginpath = $_SERVER['PHP_SELF'];
+
+$template = "";
+if(empty($template_name)) $template = "daloradius";
+if (file_exists("template/".$template_name)) {
+    $template = $template_name;
+} else {
+    $template =  "daloradius";
+}
+
 
 include('lang/main.php');
 
@@ -152,7 +165,6 @@ else
 
 (isset($_GET['reply']))      ? $reply        = $_GET['reply']       : $reply = "";
 
-
 $userurldecode = $userurl;
 $redirurldecode = $redirurl;
 
@@ -167,22 +179,32 @@ if ($button == 'Login') {
   $response = md5("\0" . $password . $newchal);
   $newpwd = pack("a32", $password);
   $pappassword = implode ("", unpack("H32", ($newpwd ^ $newchal)));
-  echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
-<html>
-<head>
+  
+    echo "<!doctype html>
+    <html lang=\"en\">
+    <head>
+    <!-- Required meta tags -->
+    <meta charset=\"utf-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">
+    
   <title>$title</title>
   <meta http-equiv=\"Cache-control\" content=\"no-cache\">
   <meta http-equiv=\"Pragma\" content=\"no-cache\">
-  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />
-  <link href=\"template/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />
-  ";
+  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />
+  <link rel=\"stylesheet\" href=\"css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">"
+  ;
+  
+    if (file_exists("template/".$template_name."/css/style.css")) {
+        echo "<link href=\"template/".$template."/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />";
+    }
+
   if (isset($uamsecret) && isset($userpassword)) {
     echo "  <meta http-equiv=\"refresh\" content=\"0;url=http://$uamip:$uamport/logon?username=$username&password=$pappassword\">";
   } else {
     echo "  <meta http-equiv=\"refresh\" content=\"0;url=http://$uamip:$uamport/logon?username=$username&response=$response&userurl=$userurl\">";
   }
 
-	include('template/loggingin.php');
+	include('template/'.$template.'/loggingin.php');
 
 echo "
 <!--
@@ -220,92 +242,84 @@ switch($res) {
   default: $result = 0; // Default: It was not a form request
 }
 
+/* Testing */
+# $result = 5;
+
 /* Otherwise it was not a form request
  * Send out an error message
  */
 if ($result == 0) {
-	include('hotspotlogin-nonchilli.php');
+	include('template/'.$template.'/hotspotlogin-nonchilli.php');
 	exit(0);
 }
 
 # Generate the output
 #echo "Content-type: text/html\n\n";
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
-<html>
+
+# HTML 4
+#echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+#<html>
+
+# HTML5 doctype
+echo "<!doctype html>
+<html lang=\"en\">
 <head>
+    <!-- Required meta tags -->
+    <meta charset=\"utf-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">
+
+
   <title>$title</title>
   <meta http-equiv=\"Cache-control\" content=\"no-cache\">
   <meta http-equiv=\"Pragma\" content=\"no-cache\">
-  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\" />
-  <link href=\"template/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />
-  <SCRIPT LANGUAGE=\"JavaScript\">
-	";
-	include('js/hotspotlogin.js');
+  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />
+  <link rel=\"stylesheet\" href=\"css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">
+  
+  ";
+  
+  
+if (file_exists("template/".$template_name."/css/style.css")) {
+    echo "<link href=\"template/".$template."/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />";
+}
+  
+  
+
+  
+  echo "<script language=\"javascript\">";
+    include('js/hotspotlogin.js');
+  echo "</script>";
+
 echo "
-  </script>
 </head>
-<body onLoad=\"javascript:doOnLoad($result, '$loginpath?res=popup2&uamip=$uamip&uamport=$uamport&userurl=$userurl&redirurl=$redirurl&timeleft=$timeleft','$userurldecode', '$redirurldecode', '$timeleft')\" onBlur = 'javascript:doOnBlur($result)' bgColor = '#c0d8f4'>";
+<body onLoad=\"javascript:doOnLoad($result, '$loginpath?res=popup2&uamip=$uamip&uamport=$uamport&userurl=$userurl&redirurl=$redirurl&timeleft=$timeleft','$userurldecode', '$redirurldecode', '$timeleft')\" onBlur = 'javascript:doOnBlur($result)' bgColor = '#c0d8f4'>
+";
 
 if ($result == 2) {
-    echo "
-  <h1 style=\"text-align: center;\">$h1Failed</h1>";
-    if ($reply) {
-    echo "<center> $reply </BR></BR></center>";
-    }
-}
-
-if ($result == 5) {
-//	chillispot header - login form
-//	echo "<h1 style=\"text-align: center;\">$h1Login</h1>";
+    include('template/'.$template.'/login-failed-notification.php');
 }
 
 if ($result == 2 || $result == 5) {
-	include('template/loginform-header.php');
-	include('template/loginform-login.php');
-	include('template/loginform-footer.php');
+	include('template/'.$template.'/loginform-header.php');
+	include('template/'.$template.'/loginform-login.php');
+	include('template/'.$template.'/loginform-footer.php');
 }
 
 if ($result == 1) {
-  echo "
-  <h1 style=\"text-align: center;\">$h1Loggedin</h1>";
-
-  if ($reply) { 
-      echo "<center> $reply </br></br></center>";
-  }
-
-  echo "
-  <center>
-    <a href=\"http://$uamip:$uamport/logoff\">Logout</a>
-  </center>
-</body>
-</html>";
+    include('template/'.$template.'/login-successful.php');
 }
 
 if (($result == 4) || ($result == 12)) {
-  echo "
-  <h1 style=\"text-align: center;\">$h1Loggedin</h1>
-  <center>
-    <a href=\"http://$uamip:$uamport/logoff\">$centerLogout</a>
-  </center>
-  </body>
-</html>";
+    include('template/'.$template.'/logoff.php');
 }
 
 
 if ($result == 11) {
-        include('template/loggingin-popup.php');
+        include('template/'.$template.'/loggingin-popup.php');
 }
 
 
 if (($result == 3) || ($result == 13)) {
-  echo "
-  <h1 style=\"text-align: center;\">$h1Loggedout</h1>
-  <center>
-    <a href=\"http://$uamip:$uamport/prelogin\">$centerLogin</a>
-  </center>
-</body>
-</html>";
+    include('template/'.$template.'/prelogin.php');
 }
 
 exit(0);
-?>
