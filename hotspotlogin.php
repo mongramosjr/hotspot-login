@@ -36,25 +36,25 @@
 
 # Shared secret used to encrypt challenge with. Prevents dictionary attacks.
 # You should change this to your own shared secret.
-$uamsecret = "enginx";
+$uamsecret = "uamtesting123";
 
 # Uncomment the following line if you want to use ordinary user-password
 # for radius authentication. Must be used together with $uamsecret.
 $userpassword=1;
 
 # Define your template here
-$template_name = "daloradius";
+$template_name = "";
 $language = "en";
 
 # Our own path
 $loginpath = $_SERVER['PHP_SELF'];
 
 $template = "";
-if(empty($template_name)) $template = "daloradius";
+if(empty($template_name)) $template_name = "default";
 if (file_exists("template/".$template_name)) {
     $template = $template_name;
 } else {
-    $template =  "daloradius";
+    $template =  "default";
 }
 
 
@@ -203,8 +203,11 @@ if ($button == 'Login') {
   } else {
     echo "  <meta http-equiv=\"refresh\" content=\"0;url=http://$uamip:$uamport/logon?username=$username&response=$response&userurl=$userurl\">";
   }
-
-	include('template/'.$template.'/loggingin.php');
+    
+    echo "</head>";
+    echo "<body>";
+    
+    include('template/'.$template.'/loggingin.php');
 
 echo "
 <!--
@@ -226,7 +229,8 @@ echo "
 -->
 ";
 
-    echo "</body></html>";
+    echo "</body>";
+    echo "</html>";
     exit(0);
 }
 
@@ -290,10 +294,8 @@ if (file_exists("template/".$template."/css/style.css")) {
     include('js/hotspotlogin.js');
   echo "</script>";
 
-echo "
-</head>
-<body onLoad=\"javascript:doOnLoad($result, '$loginpath?res=popup2&uamip=$uamip&uamport=$uamport&userurl=$userurl&redirurl=$redirurl&timeleft=$timeleft','$userurldecode', '$redirurldecode', '$timeleft')\" onBlur = 'javascript:doOnBlur($result)' bgColor = '#c0d8f4'>
-";
+echo "</head>";
+echo "<body onLoad=\"javascript:doOnLoad($result, '$loginpath?res=popup2&uamip=$uamip&uamport=$uamport&userurl=$userurl&redirurl=$redirurl&timeleft=$timeleft','$userurldecode', '$redirurldecode', '$timeleft')\" onBlur = 'javascript:doOnBlur($result)' bgColor = '#c0d8f4'>";
 
 if ($result == 2) {
     include('template/'.$template.'/login-failed-notification.php');
@@ -323,5 +325,6 @@ if (($result == 3) || ($result == 13)) {
     include('template/'.$template.'/prelogin.php');
 }
 
-echo "</body></html>";
+echo "</body>";
+echo "</html>";
 exit(0);

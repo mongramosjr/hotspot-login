@@ -9,13 +9,4 @@
         $template_lang =  "";
     }
     
-    
-       switch($language) {
-        
-                case "en":
-                       include ($template_lang."lang/en.php");
-                        break;
-                default:
-                       include ($template_lang."lang/en.php");
-                        break;
-        }
+    include ($template_lang."lang/".$language.".php");
