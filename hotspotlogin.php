@@ -40,7 +40,8 @@ $uamsecret = "uamtesting123";
 
 # Uncomment the following line if you want to use ordinary user-password
 # for radius authentication. Must be used together with $uamsecret.
-$userpassword=1;
+# pap or mschapv2
+$userpassword="pap";
 
 # Define your template here
 $template_name = "default";
@@ -56,6 +57,7 @@ if (file_exists("template/".$template_name)) {
     $template =  "default";
 }
 
+include('util/password.php');
 
 include('lang/main.php');
 
@@ -175,10 +177,14 @@ if ($button == 'Login') {
   } else {
     $newchal = $hexchal;
   }
-  $response = md5("\0" . $password . $newchal);
   $newpwd = pack("a32", $password);
+
+  $response = md5("\0" . $password . $newchal);
   $pappassword = implode ("", unpack("H32", ($newpwd ^ $newchal)));
-  
+
+  //$pappassword = getEncryptedPasswordPAP($password, $uamsecret, $challenge);
+  //$response = getEncryptedPasswordOther($password, $uamsecret, $challenge);
+
     echo "<!doctype html>
     <html lang=\"en\">
     <head>
@@ -197,18 +203,21 @@ if ($button == 'Login') {
         echo "<link href=\"template/".$template."/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />";
     }
 
-  if (isset($uamsecret) && isset($userpassword)) {
-    echo "  <meta http-equiv=\"refresh\" content=\"0;url=http://$uamip:$uamport/logon?username=$username&password=$pappassword\">";
+  if (isset($uamsecret) && isset($userpassword) && $userpassword=="pap" ) {
+    echo "  <meta http-equiv=\"refresh\" content=\"0;url=http://$uamip:$uamport/login?username=$username&password=$pappassword\">";
   } else {
-    echo "  <meta http-equiv=\"refresh\" content=\"0;url=http://$uamip:$uamport/logon?username=$username&response=$response&userurl=$userurl\">";
+    echo "  <meta http-equiv=\"refresh\" content=\"0;url=http://$uamip:$uamport/login?username=$username&response=$response&userurl=$userurl\">";
   }
-    
+
     echo "</head>";
     echo "<body>";
-    
+
     include('template/'.$template.'/loggingin.php');
 
-echo "
+    echo "</body>";
+    echo "</html>";
+
+    echo "
 <!--
 <?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <WISPAccessGatewayParam 
@@ -218,18 +227,16 @@ echo "
 <MessageType>120</MessageType>
 <ResponseCode>201</ResponseCode>
 ";
-  if (isset($uamsecret) && isset($userpassword)) {
-    echo "<LoginResultsURL>http://$uamip:$uamport/logon?username=$username&password=$pappassword</LoginResultsURL>";
+  if (isset($uamsecret) && isset($userpassword) && $userpassword=="pap") {
+    echo "<LoginResultsURL>http://$uamip:$uamport/login?username=$username&password=$pappassword</LoginResultsURL>";
   } else {
-    echo "<LoginResultsURL>http://$uamip:$uamport/logon?username=$username&response=$response&userurl=$userurl</LoginResultsURL>";
+    echo "<LoginResultsURL>http://$uamip:$uamport/login?username=$username&response=$response&userurl=$userurl</LoginResultsURL>";
   }
   echo "</AuthenticationReply> 
 </WISPAccessGatewayParam>
 -->
 ";
 
-    echo "</body>";
-    echo "</html>";
     exit(0);
 }
 
@@ -324,9 +331,14 @@ if (($result == 3) || ($result == 13)) {
     include('template/'.$template.'/prelogin.php');
 }
 
-echo "<script src=\"js/jquery-3.2.1.slim.min.js\" integrity=\"sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN\" crossorigin=\"anonymous\"></script>";
-echo "<script src=\"js/popper.min.js\" integrity=\"sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q\" crossorigin=\"anonymous\"></script>";
-echo "<script src=\"js/bootstrap.min.js\" integrity=\"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl\" crossorigin=\"anonymous\"></script>";
+
+
+//var_dump($_POST);
+//var_dump($_GET);
+
+#echo "<script src=\"js/jquery-3.2.1.slim.min.js\" integrity=\"sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN\" crossorigin=\"anonymous\"></script>";
+#echo "<script src=\"js/popper.min.js\" integrity=\"sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q\" crossorigin=\"anonymous\"></script>";
+#echo "<script src=\"js/bootstrap.min.js\" integrity=\"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl\" crossorigin=\"anonymous\"></script>";
 
 echo "</body>";
 echo "</html>";

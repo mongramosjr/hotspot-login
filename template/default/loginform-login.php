@@ -27,21 +27,20 @@
 
 echo "
 <div class = 'container'>
-	<div class='wrapper'>
-		<form action='$loginpath' method='post' name='Login_Form' class='form-signin'>
+    <div class='wrapper'>
+        <form action='$loginpath' method='post' name='Login_Form' class='form-signin'>
             <input type='hidden' name='challenge' value='$challenge'>
             <input type='hidden' name='uamip' value='$uamip'>
             <input type='hidden' name='uamport' value='$uamport'>
             <input type='hidden' name='userurl' value='$userurl'>
-		    <h3 class='form-signin-heading'>Welcome!</h3>
-			  <hr class='colorgraph'><br>
-			  
-			  <input type='text' class='form-control' name='Username' placeholder='$centerUsername' required='' autofocus='' />
-			  <input type='password' class='form-control' name='Password' placeholder='$centerPassword' required=''/>     		  
-			 
-              <input type='submit' name='button' value='Login'  class='btn btn-lg btn-primary btn-block'
-                onClick=\'javascript:popUp('$loginpath?res=popup1&uamip=$uamip&uamport=$uamport')\'>
-		</form>			
-	</div>
+            <h3 class='form-signin-heading'>Welcome!</h3>
+            <hr class='colorgraph'><br>
+              
+            <input type='text' class='form-control' name='UserName' placeholder='$centerUsername' required='' autofocus='' />
+            <input type='password' class='form-control' name='Password' placeholder='$centerPassword' required=''/>
+            <input type='hidden' name='button' value='Login'>
+            <button class='btn btn-lg btn-primary btn-block' onClick=\'javascript:popUp('$loginpath?res=popup1&uamip=$uamip&uamport=$uamport')\'>Login</button>
+        </form>         
+    </div>
 </div>
 ";
