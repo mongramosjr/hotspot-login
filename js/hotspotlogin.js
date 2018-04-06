@@ -54,6 +54,11 @@ function doOnLoad(result, URL, userurl, redirurl, timeleft) {
     var isSafari = /a/.__proto__=='//';
     if(!isSafari) isSafari = !!navigator.userAgent.match(/safari/i) && !navigator.userAgent.match(/chrome/i) && typeof document.body.style.webkitFilter !== \"undefined\" && !window.chrome;
     if(!isSafari) isSafari = /constructor/i.test(window.HTMLElement);
+    if(!isSafari){
+        if (navigator.userAgent.search(\"Safari\") >= 0 && navigator.userAgent.search(\"Chrome\") < 0) {
+            isSafari = true;
+        }
+    }
 
 	if (timeleft) {
 		mytimeleft = timeleft;
