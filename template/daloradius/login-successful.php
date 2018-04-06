@@ -25,7 +25,7 @@
  *********************************************************************************************************
  */
 
-echo "<h1 style=\"text-align: center;\">$h1Loggedin</h1>";
+echo "<h1 style=\"text-align: center;\">$h1Successful</h1>";
 
 if ($reply) { 
   echo "<center> $reply </br></br></center>";

@@ -7,7 +7,7 @@
 echo "<div class='container-fluid'><div class='alert-wrapper  text-center'>";
 
 echo "<div class='alert alert-primary text-center' role='alert'>
-    $h1Loggedin";
+    $h1Successful";
 if ($reply) { 
   echo "<hr><p class='mb-0'>$reply</p>";
 }

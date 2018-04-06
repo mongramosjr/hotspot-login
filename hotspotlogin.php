@@ -301,8 +301,8 @@ echo "<!doctype html>
   echo "</script>";
 
 echo "</head>";
-echo "<body onLoad=\"javascript:doOnLoad($result, '$loginpath?res=popup2&uamip=$uamip&uamport=$uamport&userurl=$userurl&redirurl=$redirurl&timeleft=$timeleft','$userurldecode', '$redirurldecode', '$timeleft')\" onBlur = 'javascript:doOnBlur($result)' >";
-
+//echo "<body onLoad=\"javascript:doOnLoad($result, '$loginpath?res=popup2&uamip=$uamip&uamport=$uamport&userurl=$userurl&redirurl=$redirurl&timeleft=$timeleft','$userurldecode', '$redirurldecode', '$timeleft')\" onBlur = 'javascript:doOnBlur($result)' >";
+echo "<body onBlur = 'javascript:doOnBlur($result)' >";
 if ($result == 2) {
     include('template/'.$template.'/login-failed-notification.php');
 }

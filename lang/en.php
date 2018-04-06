@@ -14,6 +14,7 @@ $centerLogout="Logout";
 $h1Login="$ChilliSpot Login";
 $h1Failed="$ChilliSpot Login Failed";  
 $h1Loggedin="Logged in to $ChilliSpot";
+$h1Successful="You can now surf the Internet and stay connected online";  
 $h1Loggingin="Logging in to $ChilliSpot";
 $h1Loggedout="Logged out from $ChilliSpot";
 $centerdaemon="Login must be performed through $ChilliSpot server";
