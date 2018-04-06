@@ -50,6 +50,11 @@ function popUp(URL) {
 }
 
 function doOnLoad(result, URL, userurl, redirurl, timeleft) {
+
+    var isSafari = /a/.__proto__=='//';
+    if(!isSafari) isSafari = !!navigator.userAgent.match(/safari/i) && !navigator.userAgent.match(/chrome/i) && typeof document.body.style.webkitFilter !== "undefined" && !window.chrome;
+    if(!isSafari) isSafari = /constructor/i.test(window.HTMLElement);
+
 	if (timeleft) {
 		mytimeleft = timeleft;
 	}
@@ -59,7 +64,11 @@ function doOnLoad(result, URL, userurl, redirurl, timeleft) {
 	}
 
 	if ((result == 1) && (self.name != \"chillispot_popup\")) {
-		chillispot_popup = window.open(URL,'chillispot_popup','toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=375');
+        if ( isSafari ) {
+            
+        }else{
+            chillispot_popup = window.open(URL,'chillispot_popup','toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=375');
+        }
 	}
 
 	if ((result == 2) || result == 5) {
@@ -67,21 +76,30 @@ function doOnLoad(result, URL, userurl, redirurl, timeleft) {
 	}
 
 	if ((result == 2) && (self.name != \"chillispot_popup\")) {
-		chillispot_popup = window.open('','chillispot_popup','toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=400,height=200');
-		chillispot_popup.close();
+        if ( isSafari ) {
+            
+        }else{
+            chillispot_popup = window.open('','chillispot_popup','toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=400,height=200');
+            chillispot_popup.close();
+        }
 	}
 
 	if ((result == 12) && (self.name == \"chillispot_popup\")) {
 		
 		doTime();
+        
+        if ( isSafari ) {
+            
+        }else{
 
-		if (redirurl) {
-			opener.location = redirurl;
-		} else if (opener.home) {
-			opener.home();
-		} else {
-			opener.location = \"about:home\";
-		}
+            if (redirurl) {
+                opener.location = redirurl;
+            } else if (opener.home) {
+                opener.home();
+            } else {
+                opener.location = \"about:home\";
+            }
+        }
 
 		self.focus();
 		blur = 0;
